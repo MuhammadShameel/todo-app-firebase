@@ -50,3 +50,7 @@
   padding: 20px;
   margin: 20px;
 }
+.btn:hover {
+  scale: 1.1;
+  transition: ease-in-out 0.3s;
+}
