@@ -1,6 +1,10 @@
 /* eslint-disable no-undef */
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import {
+  signInWithPopup,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase.utils";
 import "../App.css";
@@ -10,16 +14,19 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-
   const [showPassword, setShowPassword] = useState(false);
+
   const [successMessage, setSuccessMessage] = useState("");
-  const [errorPromt, setError] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [submitDisabled, setSubmitDisabled] = useState(false);
 
   const handleLogin = async () => {
     if (!values.email || !values.password || submitDisabled) {
       return;
     }
+
+    setErrorMsg("");
+    setSubmitDisabled(true);
 
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -29,20 +36,23 @@ const SignIn = () => {
       );
       const user = userCredential.user;
       console.log(user);
-
       setSuccessMessage("User is successfully entered");
       window.location.href = "/";
     } catch (err) {
       setSubmitDisabled(false);
 
       if (err.code === "auth/wrong-password") {
-        setError("Wrong password. Please try again.");
+        setErrorMsg("Wrong password. Please try again.");
       } else if (err.code === "auth/user-not-found") {
-        setError("User not found. Please sign up first.");
+        setErrorMsg("User not found. Please sign up first.");
       } else {
-        setError(err.message);
+        setErrorMsg(err.message);
       }
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleFacebookLogin = async () => {
@@ -51,22 +61,29 @@ const SignIn = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log(user);
-      setSuccessMessage("User is successfully signed in with Facebook");
+      setSuccessMessage("Successfully SignIn");
       window.location.href = "/";
     } catch (error) {
       console.error(error);
-      setError(error.message);
+      setErrorMsg(error.message);
     }
   };
 
-  const seePassword = () => {
-    setShowPassword(!showPassword);
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, new GoogleAuthProvider());
+      const user = result.user;
+      console.log(user);
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Google login error:", error);
+    }
   };
 
   return (
     <div>
       <div className="container mx-auto">
-        <div className="w-50 mx-auto border p-3 mt-5 shadow p-3 mb-5 bg-white rounded login-container">
+        <div className="w-50 mx-auto border p-3 mt-5 shadow p-3 mb-5 bg-white rounded secondary-background-color border-0 text-white ">
           <h2 className="text-center title">SignIn</h2>
           <form className="w-100 mx-auto ">
             <div className="mb-3">
@@ -77,7 +94,7 @@ const SignIn = () => {
                   setValues({ ...values, email: event.target.value })
                 }
                 className="form-control"
-                id="inputEmail"
+                id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
             </div>
@@ -95,7 +112,7 @@ const SignIn = () => {
                 <button
                   type="button"
                   className="btn btn-outline-secondary border-none"
-                  onClick={seePassword}
+                  onClick={togglePasswordVisibility}
                 >
                   {showPassword ? (
                     <svg
@@ -103,7 +120,7 @@ const SignIn = () => {
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-eye-fill"
+                      className="bi bi-eye-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
@@ -115,7 +132,7 @@ const SignIn = () => {
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-eye-slash-fill"
+                      className="bi bi-eye-slash-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
@@ -126,38 +143,65 @@ const SignIn = () => {
               </div>
             </div>
             <div className="mb-2 text-center">
-              <b>{errorPromt}</b>
+              <b>{errorMsg}</b>
               <b>{successMessage}</b>
-            </div>
-            <div className="d-flex justify-content-end">
-              <button className="btn bg-primary text-white ">
-                Forgot Password
-              </button>
             </div>
             <div className="d-flex justify-content-center align-items-center flex-wrap">
               <button
                 type="submit"
                 onClick={handleLogin}
                 disabled={submitDisabled}
-                className="btn btn-primary w-25 login-btn"
+                className="btn orange_color_bg text-white w-75 "
               >
                 {" "}
-                SignIn
+                Continue
               </button>
-              <p className="mt-3 ms-3">
+              <button
+                type="button"
+                id="facebook-login"
+                name="facebook-login"
+                className="btn btn-primary w-75 login-btn mt-2 "
+                onClick={handleFacebookLogin}
+              >
+                <h6 className="text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="#ffff"
+                    className="bi bi-facebook me-2"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                  </svg>{" "}
+                  Login with Facebook
+                </h6>
+              </button>
+              <button
+                type="button"
+                id="google-login"
+                name="google-login"
+                className="btn btn-primary w-75 mt-2 "
+                onClick={handleGoogleLogin}
+              >
+                <h6 className="text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-google me-2 "
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                  </svg>{" "}
+                  Login with Google
+                </h6>
+              </button>
+              <p className="mt-3 ms-3 w-100 text-center">
                 Not a member? <a href="/signup">SignUp</a>
               </p>
             </div>
-
-            <button
-              type="button"
-              id="facebook-login"
-              name="facebook-login"
-              className="btn btn-primary btn-lg btn-block"
-              onClick={handleFacebookLogin}
-            >
-              <i class="fa fa-facebook "></i> Login with Facebook
-            </button>
           </form>
         </div>
       </div>

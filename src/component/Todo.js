@@ -11,7 +11,7 @@ function TodoApp() {
 
   useEffect(() => {
     if (user) {
-      const userTodoCollection = dataBase.collection(`users/${user.uid}/todos`);
+      const userTodoCollection = dataBase.collection(`users/${user.id}/todos`);
 
       userTodoCollection.orderBy("timestamp", "desc").onSnapshot((snapshot) => {
         setTodos(
@@ -29,7 +29,7 @@ function TodoApp() {
     e.preventDefault();
 
     if (user) {
-      const userTodoCollection = dataBase.collection(`users/${user.uid}/todos`);
+      const userTodoCollection = dataBase.collection(`users/${user.id}/todos`);
       userTodoCollection.add({
         todo: input,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -40,8 +40,8 @@ function TodoApp() {
   };
 
   return (
-    <div className="App">
-      <div className="card border-0">
+    <div className="App ">
+      <div className="card border-0 secondary-background-color text-white ">
         <h1 className="title">TODO LIST</h1>
         <form className="input-group mb-3">
           <input
@@ -53,7 +53,7 @@ function TodoApp() {
           />
           <button
             type="submit"
-            className="btn btn-primary rounded addTodo"
+            className="btn orange_color_bg text-white rounded addTodo"
             onClick={addTodo}
             disabled={input.trim() === ""}
           >
@@ -61,9 +61,9 @@ function TodoApp() {
           </button>
         </form>
       </div>
-      <div className="card ">
+      <div className="card secondary-background-color text-white">
         <table className="table">
-          <thead>
+          <thead className="text-white">
             <tr>
               <th scope="col" className="table-heading">
                 ID
@@ -80,9 +80,17 @@ function TodoApp() {
             </tr>
           </thead>
           <tbody>
-            {todos.map((todo) => (
-              <TodoItem key={todo.id} todo={todo} userUid={user.uid} />
-            ))}
+            {todos.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center orange_color">
+                  {user ? "ADD YOUR DAILY TASK" : "LOGIN FOR ADDING YOUR TASK"}
+                </td>
+              </tr>
+            ) : (
+              todos.map((todo) => (
+                <TodoItem key={todo.id} todo={todo} userId={user.id} />
+              ))
+            )}
           </tbody>
         </table>
       </div>
