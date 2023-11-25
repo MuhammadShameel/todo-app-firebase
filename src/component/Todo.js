@@ -11,7 +11,7 @@ function TodoApp() {
 
   useEffect(() => {
     if (user) {
-      const userTodoCollection = dataBase.collection(`users/${user.id}/todos`);
+      const userTodoCollection = dataBase.collection(`users/${user.uid}/todos`);
 
       userTodoCollection.orderBy("timestamp", "desc").onSnapshot((snapshot) => {
         setTodos(
@@ -29,7 +29,7 @@ function TodoApp() {
     e.preventDefault();
 
     if (user) {
-      const userTodoCollection = dataBase.collection(`users/${user.id}/todos`);
+      const userTodoCollection = dataBase.collection(`users/${user.uid}/todos`);
       userTodoCollection.add({
         todo: input,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),

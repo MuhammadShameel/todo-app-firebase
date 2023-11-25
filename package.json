@@ -1,4 +1,5 @@
 {
+  "proxy": "https://todoapp-81bfc.web.app/",
   "name": "my-todo-app",
   "version": "0.1.0",
   "private": true,
@@ -12,6 +13,8 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
+    "react-facebook-login": "^4.1.1",
+    "react-google-button": "^0.7.2",
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
