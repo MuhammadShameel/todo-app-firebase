@@ -84,7 +84,7 @@ const SignIn = () => {
   return (
     <div>
       <div className="container mx-auto">
-        <div className="w-50 mx-auto border p-3 mt-5 shadow p-3 mb-5 bg-white rounded secondary-background-color border-0 text-white ">
+        <div className="register-box mx-auto border p-3 mt-5 shadow p-3 mb-5 bg-white rounded secondary-background-color border-0 text-white ">
           <h2 className="text-center title">SignIn</h2>
           <form className="w-100 mx-auto ">
             <div className="mb-3">
@@ -152,16 +152,20 @@ const SignIn = () => {
                 type="submit"
                 onClick={handleLogin}
                 disabled={submitDisabled}
-                className="btn orange_color_bg text-white w-75 "
+                className="btn orange_color_bg text-white w-75 hover-effect"
               >
                 {" "}
                 Continue
               </button>
+              <GoogleButton
+                className="w-75 mt-2 hover-effect google-btn hover-effect"
+                onClick={handleGoogleLogin}
+              />
               <button
                 type="button"
                 id="facebook-login"
                 name="facebook-login"
-                className="btn btn-primary w-75  mt-2 fb-login-button "
+                className="btn btn-primary w-75  mt-2 fb-login-button hover-effect "
                 onClick={handleFacebookLogin}
               >
                 <h6 className="text-white">
@@ -178,8 +182,6 @@ const SignIn = () => {
                   Login with Facebook
                 </h6>
               </button>
-
-              <GoogleButton className="w-75 mt-2" onClick={handleGoogleLogin} />
               <p className="mt-3 ms-3 w-100 text-center">
                 Not a member? <a href="/signup">SignUp</a>
               </p>

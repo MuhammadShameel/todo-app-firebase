@@ -45,10 +45,7 @@ function Home() {
               className="bg-body-tertiary secondary-background-color"
             >
               <Container fluid className="w-100">
-                <Navbar.Brand
-                  href="#"
-                  className="text-white accordion  ms-auto"
-                >
+                <Navbar.Brand href="#" className="text-white accordion ms-auto">
                   <h5 className="text-white">Welcome {userName}</h5>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
@@ -95,7 +92,7 @@ function Home() {
               <Container fluid className="w-100">
                 <Navbar.Brand
                   href="#"
-                  className="text-white accordion  ms-auto"
+                  className="text-white accordion  me-auto "
                 >
                   TODO APP
                 </Navbar.Brand>

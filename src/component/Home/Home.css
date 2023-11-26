@@ -1,16 +1,27 @@
 body {
   background-color: #1a202c;
 }
+
 .secondary-color {
   color: #171d29;
 }
+
 .secondary-background-color {
   background-color: #13171d !important;
 }
+
 .orange_color_bg {
   background-color: #ff9900;
 }
 
 .orange_color {
   color: #ff9900;
+}
+
+.hover-effect {
+  transition: 0.3s ease-in-out !important;
+}
+
+.google-btn:hover {
+  transform: scale(1.1) !important;
 }
