@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import firebase from "firebase/compat/app";
 import { dataBase } from "../firebase.utils";
 
-const TodoItem = ({ todo, userId }) => {
+const TodoItem = ({ todo, userUid }) => {
   const [editInput, setEditInput] = useState("");
   const [editingTodoId, setEditingTodoId] = useState(null);
 
@@ -12,7 +12,7 @@ const TodoItem = ({ todo, userId }) => {
   };
 
   const confirmEdit = (todoId) => {
-    const userTodoCollection = dataBase.collection(`users/${userId}/todos`);
+    const userTodoCollection = dataBase.collection(`users/${userUid}/todos`);
 
     userTodoCollection.doc(todoId).update({
       todo: editInput,
@@ -23,7 +23,7 @@ const TodoItem = ({ todo, userId }) => {
   };
 
   const deleteTodo = (todoId) => {
-    const userTodoCollection = dataBase.collection(`users/${userId}/todos`);
+    const userTodoCollection = dataBase.collection(`users/${userUid}/todos`);
 
     userTodoCollection.doc(todoId).delete();
   };

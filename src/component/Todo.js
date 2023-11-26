@@ -88,7 +88,7 @@ function TodoApp() {
               </tr>
             ) : (
               todos.map((todo) => (
-                <TodoItem key={todo.id} todo={todo} userId={user.id} />
+                <TodoItem key={todo.id} todo={todo} userUid={user.uid} />
               ))
             )}
           </tbody>
