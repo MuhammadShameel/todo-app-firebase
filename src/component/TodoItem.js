@@ -29,7 +29,7 @@ const TodoItem = ({ todo, userUid }) => {
   };
 
   return (
-    <tr className="text-center text-white " key={todo.id}>
+    <tr className="text-center text-white w-100" key={todo.id}>
       <th className="data-id">{todo.id}</th>
       <th className="data-id">
         {editingTodoId === todo.id ? (

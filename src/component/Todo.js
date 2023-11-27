@@ -41,9 +41,9 @@ function TodoApp() {
 
   return (
     <div className="App ">
-      <div className="card border-0 secondary-background-color text-white ">
+      <div className="card border-0 secondary-background-color text-white w-75">
         <h1 className="title">TODO LIST</h1>
-        <form className="input-group mb-3">
+        <form className="input-group mb-3 ">
           <input
             type="text"
             className="form-control me-3 rounded"
@@ -61,7 +61,7 @@ function TodoApp() {
           </button>
         </form>
       </div>
-      <div className="card secondary-background-color text-white">
+      <div className="card secondary-background-color text-white w-75">
         <table className="table">
           <thead className="text-white">
             <tr>

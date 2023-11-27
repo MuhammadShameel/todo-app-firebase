@@ -54,8 +54,13 @@
   scale: 1.1;
   transition: ease-in-out 0.3s;
 }
-@media (max-width: 1440px) and (min-width: 992px) {
+@media (max-width: 2560px) and (min-width: 992px) {
   .register-box {
     width: 50%;
   }
+}
+
+.register-box {
+  align-items: center !important;
+  vertical-align: middle !important;
 }
